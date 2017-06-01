@@ -17,37 +17,23 @@ public class server {
             listener.close();
         }
     }
-
+	
     private static class Capitalizer extends Thread {
         private Socket socket;
-        private int clientNumber;
 
         public Capitalizer(Socket socket) {
             this.socket = socket;
             System.out.println("Connected to a Client");
         }
 
-        /**
-         * Services this thread's client by first sending the
-         * client a welcome message then repeatedly reading strings
-         * and sending back the capitalized version of the string.
-         */
         public void run() {
             try {
-
-                // Decorate the streams so we can send characters
-                // and not just bytes.  Ensure output is flushed
-                // after every newline.
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-                // Send a welcome message to the client.
-//                out.println("Hello, you are client #" + clientNumber + ".");
                 out.println("Enter a line with only a period to quit\n");
 
-                // Get messages from the client, line by line; return them
-                // capitalized
                 while (true) {
                     String input = in.readLine();
                     if (input == null || input.equals(".")) {
@@ -56,14 +42,14 @@ public class server {
                     out.println(input.toUpperCase());
                 }
             } catch (IOException e) {
-                System.out.println("Error handling client# " + clientNumber + ": " + e);
+                System.out.println("Error handling client# " + e);
             } finally {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                	System.out.println("Couldn't close a socket, what's going on?");
+                	System.out.println("Socket Closing Error");
                 }
-                System.out.println("Connection with client# " + clientNumber + " closed");
+                System.out.println("Connection with client# " +" closed");
             }
         }
 

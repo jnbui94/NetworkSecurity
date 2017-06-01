@@ -17,8 +17,8 @@ public class client {
 	 private BufferedReader bufferIn;
 	   private PrintWriter out;
 	  private JFrame frame = new JFrame("Client");
-	    private JTextField dataField = new JTextField(40);
-	    private JTextArea messageArea = new JTextArea(10, 60);
+	    private JTextField dataField = new JTextField(80);
+	    private JTextArea messageArea = new JTextArea(15, 40);
 
 	public client() {
 		// Layout GUI
@@ -28,15 +28,7 @@ public class client {
 
         // Add Listeners
         dataField.addActionListener(new ActionListener() {
-            /**
-             * Responds to pressing the enter key in the textfield
-             * by sending the contents of the text field to the
-             * server and displaying the response from the server
-             * in the text area.  If the response is "." we exit
-             * the whole application, which closes all sockets,
-             * streams and windows.
-             */
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent theE) {
                 out.println(dataField.getText());
                    String response;
                 try {
@@ -54,21 +46,18 @@ public class client {
     }
 
     public void connectToServer() throws IOException {
-
-        // Get the server address from a dialog box.
+        // Get the server.
         String serverAddress = JOptionPane.showInputDialog(
             frame,
             "Enter IP Address of Server:",
             "This Program will capitalize your words",
-            JOptionPane.QUESTION_MESSAGE);
+            JOptionPane.WARNING_MESSAGE);
 
         // Make connection and initialize streams
         Socket socket = new Socket(serverAddress, 9898);
         bufferIn = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-
-        // Consume the initial welcoming messages from the server
         for (int i = 0; i < 3; i++) {
             messageArea.append(bufferIn.readLine() + "\n");
         }
@@ -80,7 +69,7 @@ public class client {
     }
 
     /**
-     * Runs the client application.
+     * Main method.
      */
     public static void main(String[] args) throws Exception {
         client client = new client();
