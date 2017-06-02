@@ -11,17 +11,17 @@ public class server {
         ServerSocket listener = new ServerSocket(9898);
         try {
             while (true) {
-                new Capitalizer(listener.accept()).start();
+                new executeClass(listener.accept()).start();
             }
         } finally {
             listener.close();
         }
     }
 	
-    private static class Capitalizer extends Thread {
+    private static class executeClass extends Thread {
         private Socket socket;
 
-        public Capitalizer(Socket socket) {
+        public executeClass(Socket socket) {
             this.socket = socket;
             System.out.println("Connected to a Client");
         }
