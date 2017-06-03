@@ -12,14 +12,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-// Client class act as a client
+/**
+ * Client class act as a client and connects to server.
+ */
 public class client {
 	 private BufferedReader bufferIn;
 	   private PrintWriter out;
 	  private JFrame frame = new JFrame("Client");
 	    private JTextField dataField = new JTextField(80);
 	    private JTextArea messageArea = new JTextArea(15, 40);
-
+	/**
+	 * Client constructor creates client and recieves client input.
+	 */
 	public client() {
 		// Layout GUI
         messageArea.setEditable(false);
@@ -44,7 +48,10 @@ public class client {
             }
         });
     }
-
+    /**
+     * Method allows client to server connection. Creates a socket at 
+     * server 9898 and closes the socket at the end of interaction.
+     */
     public void connectToServer() throws IOException {
         // Get the server.
         String serverAddress = JOptionPane.showInputDialog(
@@ -69,7 +76,8 @@ public class client {
     }
 
     /**
-     * Main method.
+     * Main method creates client and frame for text input. Calls connectToServer()
+     * for client/server interaction.
      */
     public static void main(String[] args) throws Exception {
         client client = new client();
