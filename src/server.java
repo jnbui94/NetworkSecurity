@@ -4,7 +4,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-// Server Class
+/**
+ * Server Class creates a ServerSocket at 9898 and waits for client
+ * interaction. Creates private class executeClass once client connects.
+ */
 public class server {
 	public static void main(String[] args) throws Exception {
         System.out.println("The server is running.");
@@ -17,15 +20,28 @@ public class server {
             listener.close();
         }
     }
-	
+    /**
+     * Private class used to facilitate the client/server connection.
+     */
     private static class executeClass extends Thread {
+	/**
+	 * Socket used during the connection.
+	 */
         private Socket socket;
 
+	/**
+	 * executeClass constructor accepts Socket and confirms the connection.
+	 * @param socket the Socket used for connection
+	 */
         public executeClass(Socket socket) {
             this.socket = socket;
             System.out.println("Connected to a Client");
         }
 
+	/**
+	 * Method used to accept string and convert to capitalized string.
+	 * Closes socket upon completetion.
+	 */
         public void run() {
             try {
                 BufferedReader in = new BufferedReader(
